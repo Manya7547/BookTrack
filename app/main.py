@@ -60,7 +60,10 @@ def delete_book(book_id: int, db: Session = Depends(get_db), token: str = Depend
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Invalid token")
     return crud.delete_book(db=db, book_id=book_id)
 
-
+# SSE Route for real-time updates
+@app.get("/events")
+def get_events():
+    return sse.stream()
 
 
 
