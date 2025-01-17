@@ -39,6 +39,26 @@ def get_books(skip: int = 0, limit: int = 10, db: Session = Depends(get_db), tok
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Invalid token")
     return crud.get_books(db=db, skip=skip, limit=limit)
 
+@app.get("/books/{book_id}", response_model=schemas.Book)
+def get_book(book_id: int, db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
+    if not auth.verify_token(token):
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Invalid token")
+    db_book = crud.get_book_by_id(db=db, book_id=book_id)
+    if not db_book:
+        raise HTTPException(status_code=404, detail="Book not found")
+    return db_book
+
+@app.put("/books/{book_id}", response_model=schemas.Book)
+def update_book(book_id: int, book: schemas.BookCreate, db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
+    if not auth.verify_token(token):
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Invalid token")
+    return crud.update_book(db=db, book_id=book_id, book=book)
+
+@app.delete("/books/{book_id}", response_model=schemas.Book)
+def delete_book(book_id: int, db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
+    if not auth.verify_token(token):
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Invalid token")
+    return crud.delete_book(db=db, book_id=book_id)
 
 
 
