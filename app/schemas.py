@@ -1,26 +1,20 @@
 from pydantic import BaseModel
 from typing import Optional
 
-class BookBase(BaseModel):
+class BookCreate(BaseModel):
     title: str
     author: str
     published_date: str
     summary: str
     genre: str
 
-class BookCreate(BookBase):
-    pass
-
-class Book(BookBase):
+class BookRead(BookCreate):
     id: int
-
-    class Config:
-        orm_mode = True
-
-class Login(BaseModel):
-    username: str
-    password: str
 
 class Token(BaseModel):
     access_token: str
     token_type: str
+
+class User(BaseModel):
+    username: str
+    email: Optional[str] = None

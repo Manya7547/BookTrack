@@ -1,11 +1,14 @@
 import asyncio
-from fastapi.responses import StreamingResponse
-from datetime import datetime
+from fastapi import APIRouter
+from sse_starlette.sse import EventSourceResponse
 
-async def event_generator():
-    while True:
-        yield f"data: Real-time update at {datetime.now()}\n\n"
-        await asyncio.sleep(1)
+router = APIRouter()
 
-def stream():
-    return StreamingResponse(event_generator(), media_type="text/event-stream")
+@router.get("/updates/")
+async def get_updates():
+    async def event_stream():
+        while True:
+            yield f"data: New book added!\n\n"
+            await asyncio.sleep(5)  # Simulates waiting for updates
+
+    return EventSourceResponse(event_stream())
