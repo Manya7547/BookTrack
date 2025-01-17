@@ -18,7 +18,7 @@ from sqlalchemy.exc import SQLAlchemyError
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-DATABASE_URL = "sqlite:///./books.db"
+DATABASE_URL = 'sqlite:///./books.db'
 
 # Create the SQLAlchemy engine and session maker
 engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})  # for SQLite in multi-threaded apps
@@ -40,3 +40,4 @@ def check_db_connection():
 # Run the check_db_connection function when the script is executed directly
 if __name__ == "__main__":
     check_db_connection()
+
