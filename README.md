@@ -48,6 +48,24 @@ This project is a **FastAPI** application that provides **CRUD** operations for 
 4. Access Swagger UI:
    http://127.0.0.1:8000/docs
 
+5. Open Swagger UI: Navigate to the Swagger interface.
+
+- Locate /token Endpoint: Expand the /token or equivalent endpoint for password flow.
+
+- Try It Out: Click "Try it out" and provide:
+  ```
+  {
+  "grant_type": "password",
+  "username": "test",
+  "password": "test"
+  }
+  ```
+- Execute Request: Click "Execute" and you can see the token is generated.
+
+- Authorize: Click "Authorize" in Swagger, and type in username and password.
+
+- Test Endpoints: Expand and test other endpoints using "Try it out".
+
 ## Deployment
 
 ### Steps to Deploy on Heroku:
